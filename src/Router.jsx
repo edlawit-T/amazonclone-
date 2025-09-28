@@ -4,7 +4,7 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import Cart from "./Pages/Cart/Cart";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Auth from "./Pages/Auth/Auth";
 import Payment from "./Pages/Payment/Payment";
 import Orders from "./Pages/Orders/Orders";
