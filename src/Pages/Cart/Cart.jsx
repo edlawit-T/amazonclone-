@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Type } from "../../Utility/action.type";
 import { DataContext } from "../../components/DataProvider/DataProvider";
-import Layout from "../../components/Layout/Layout";
+import Layout from "../../components/LayOut/LayOut";
 import styles from "./Cart.module.css";
 import ProductCard from "../../components/Product/ProductCard";
 import CurrencyFormatter from "../../components/CurrencyFormat/CurrencyFormat";
