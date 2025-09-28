@@ -1,4 +1,4 @@
-import classes from "./product.module.css";
+import classes from "./Product.module.css";
 import { Rating } from "@mui/material";
 import CurrencyFormat from "../CurrencyFormat/CurrencyFormat";
 import { Link } from "react-router-dom";
