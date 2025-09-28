@@ -1,43 +1,44 @@
-// import { useReducer } from "react";
 import { Type } from "./action.type";
 
+// Load basket from localStorage if it exists, else use an empty array
+const storedBasket = JSON.parse(localStorage.getItem("basket")) || [];
+
 export const initialState = {
-  basket: [],
+  basket: storedBasket,
   user: null,
 };
 
-export const reducer = (state, action) => {
+// Function to update localStorage
+const updateLocalStorage = (basket) => {
+  localStorage.setItem("basket", JSON.stringify(basket));
+};
+
+// reducer listens for actions and modifies the state accordingly
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    //   add items
-    case Type.ADD_TO_BASKET: {
-      // use find property and check existing item //   }
+    case Type.ADD_TO_BASKET:
       const existingItem = state.basket.find(
         (item) => item.id === action.item.id
       );
 
+      let updatedBasket;
       if (!existingItem) {
-        return {
-          ...state,
-          basket: [...state.basket, { ...action.item, amount: 1 }],
-        };
+        updatedBasket = [...state.basket, { ...action.item, amount: 1 }];
       } else {
-        const updatedBasket = state.basket.map((item) => {
-          return item.id === action.item.id
+        updatedBasket = state.basket.map((item) =>
+          item.id === action.item.id
             ? { ...item, amount: item.amount + 1 }
-            : item;
-        });
-
-        return {
-          ...state,
-          basket: updatedBasket,
-        };
+            : item
+        );
       }
-    }
 
-    // remove items
-    case Type.REMOVE_FROM_BASKET: {
+      updateLocalStorage(updatedBasket); // Save to localStorage
+      return { ...state, basket: updatedBasket };
+
+    case Type.REMOVE_FROM_BASKET:
       const index = state.basket.findIndex((item) => item.id === action.id);
       let newBasket = [...state.basket];
+
       if (index >= 0) {
         if (newBasket[index].amount > 1) {
           newBasket[index] = {
@@ -48,34 +49,18 @@ export const reducer = (state, action) => {
           newBasket.splice(index, 1);
         }
       }
-      return {
-        ...state,
-        basket: newBasket,
-      };
-    }
-    // it can also use this one
-    // case Type.REMOVE_FROM_BASKET: {
-    //   const updatedBasket = state.basket
-    //     .map((item) => {
-    //       if (item.id === action.id) {
-    //         return {
-    //           ...item,
-    //           amount: item.amount - 1,
-    //         };
-    //       }
-    //       return item;
-    //     })
-    //     .filter((item) => item.amount > 0);
 
-    //   return {
-    //     ...state,
-    //     basket: updatedBasket,
-    //   };
-    // }
+      updateLocalStorage(newBasket); // Save to localStorage
+      return { ...state, basket: newBasket };
+
+    case Type.EMPTY_BASKET:
+      updateLocalStorage([]); // Clear localStorage
+      return { ...state, basket: [] };
+
+    case Type.SET_USER:
+      return { ...state, user: action.user };
 
     default:
       return state;
   }
 };
-
-/* const [state , dispatch] = useReducer(reducer, initalState) */
