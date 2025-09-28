@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { DataContext } from "../../components/DataProvider/DataProvider";
 import { useNavigate, Link,  useLocation } from "react-router-dom";
-import styles from "./Auth.module.css";
+import styles from "./auth.module.css";
 import {} from "../../Utility/firebase";
 import { ClipLoader } from "react-spinners";
 import {
